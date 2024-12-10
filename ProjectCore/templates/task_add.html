@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj Zadanie</title>
+</head>
+<body>
+    <h1>Dodaj nowe zadanie do {{ board.name }}</h1>
+    
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Dodaj zadanie</button>
+    </form>
+    
+    <a href="{% url 'board_detail' board.id %}">Powrót do tablicy</a>
+</body>
+</html>
