@@ -1,21 +1,27 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dodaj Nową Tablicę</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
-    <div class="container">
-        <h1>Dodaj Nową Tablicę</h1>
-        <form method="post">
-            {% csrf_token %}
-            <input type="text" name="name" placeholder="Nazwa tablicy" required>
-            <textarea name="description" placeholder="Opis tablicy" required></textarea>
+    <h1>Dodaj Nową Tablicę</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="name" placeholder="Nazwa tablicy" required><br/>
+        <textarea name="description" placeholder="Opis tablicy" required></textarea>
+        <div class="form-buttons">
             <input type="submit" value="Dodaj Tablicę">
-        </form>
-    </div>
+            <button id="returnButton">Powrót do strony głównej</button>
+        </div>
+    </form>
+    <script>
+        document.getElementById('returnButton').addEventListener('click', function() {
+            window.location.href = "{% url 'home' %}";
+        });
+    </script>
 </body>
 </html>

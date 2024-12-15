@@ -5,22 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strona Główna</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Strona Główna - Tablice</h1>
-        </header>
-        
-        <h2>Lista Tablic</h2>
-        <ul>
+        <h1>Lista Tablic</h1>
+            <div class="logout-container">
+                {% if user.is_authenticated %}
+                    <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="logout-button">Wyloguj się</button>
+                    </form>
+                {% endif %}
+            </div>
             {% for board in boards %}
-                <li><a href="{% url 'board' board.id %}">{{ board.name }}</a></li>
+                <button class="board-button" data-board-url="{% url 'board' board.id %}">{{ board.name }}</button>
             {% endfor %}
-        </ul>
-
-        <a href="{% url 'board_add' %}">Dodaj Tablicę</a>
+        <button id="add-board-button">Dodaj Tablicę</button>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const boardButtons = document.querySelectorAll('.board-button');
+            boardButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const url = this.getAttribute('data-board-url');
+                    window.location.href = url;
+                });
+            });
+
+            const addBoardButton = document.getElementById('add-board-button');
+            addBoardButton.addEventListener('click', function() {
+                window.location.href = "{% url 'board_add' %}";
+            });
+        });
+    </script>
 </body>
 </html>

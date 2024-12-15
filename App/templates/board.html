@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ board.name }}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
     <div class="container">
@@ -13,16 +13,55 @@
             <h1>{{ board.name }}</h1>
             <p>{{ board.description }}</p>
         </header>
-        
-        <h2>Zadania</h2>
-        <ul>
-            {% for task in tasks %}
-                <li>{{ task.name }} - {{ task.get_status_display }}</li>
-            {% endfor %}
-        </ul>
 
-        <a href="{% url 'task_add' board.id %}">Dodaj zadanie</a>
-        <a href="{% url 'home.html' %}">Powrót do strony głównej</a>
+        <h2>Zadania</h2>
+
+        <div class="task-columns">
+            <div class="task-column">
+                <h3>To Do</h3>
+                <ul>
+                    {% for task in tasks %}
+                        {% if task.status == 'TO DO' %}
+                            <li>{{ task.name }} - {{ task.status }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="task-column">
+                <h3>Doing</h3>
+                <ul>
+                    {% for task in tasks %}
+                        {% if task.status == 'DOING' %}
+                            <li>{{ task.name }} - {{ task.status }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="task-column">
+                <h3>Done</h3>
+                <ul>
+                    {% for task in tasks %}
+                        {% if task.status == 'DONE' %}
+                            <li>{{ task.name }} - {{ task.status }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <button id="addTaskButton">Dodaj zadanie</button>
+        <button id="returnButton">Powrót do strony głównej</button>
     </div>
+    <script>
+        document.getElementById('addTaskButton').addEventListener('click', function() {
+            window.location.href = "{% url 'task_add' board.id %}";
+        });
+    
+        document.getElementById('returnButton').addEventListener('click', function() {
+            window.location.href = "{% url 'home' %}";
+        });
+    </script>
 </body>
 </html>

@@ -1,27 +1,31 @@
-<!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dodaj Zadanie</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
 </head>
 <body>
     <div class="container">
-        <h1>Dodaj Zadanie do Tablicy: {{ board.name }}</h1>
+        <h1>Dodaj Zadanie do {{ board.name }}</h1>
         <form method="post">
             {% csrf_token %}
-            <input type="text" name="name" placeholder="Nazwa zadania" required>
-            <textarea name="description" placeholder="Opis zadania"></textarea>
+            <input type="text" name="name" placeholder="Nazwa zadania" required><br/>
+            <textarea name="description" placeholder="Opis zadania"></textarea><br/>
             <select name="status">
                 <option value="TO DO">Do Zrobienia</option>
                 <option value="DOING">W Trakcie</option>
                 <option value="DONE">Zrobione</option>
-            </select>
+            </select><br/>
             <input type="submit" value="Dodaj Zadanie">
         </form>
-        <a href="{% url 'board' board.id %}">Powrót do Tablicy</a>
+        <button id="returnButton">Powrót do Tablicy</button>
     </div>
 </body>
+<script>
+    document.getElementById('returnButton').addEventListener('click', function() {
+      window.location.href = "{% url 'board' board.id %}";
+    });
+  </script>
 </html>
