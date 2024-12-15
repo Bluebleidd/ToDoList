@@ -2,17 +2,26 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dodaj Zadanie</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <h1>Dodaj nowe zadanie do {{ board.name }}</h1>
-    
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Dodaj zadanie</button>
-    </form>
-    
-    <a href="{% url 'board_detail' board.id %}">Powrót do tablicy</a>
+    <div class="container">
+        <h1>Dodaj Zadanie do Tablicy: {{ board.name }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Nazwa zadania" required>
+            <textarea name="description" placeholder="Opis zadania"></textarea>
+            <select name="status">
+                <option value="TO DO">Do Zrobienia</option>
+                <option value="DOING">W Trakcie</option>
+                <option value="DONE">Zrobione</option>
+            </select>
+            <input type="submit" value="Dodaj Zadanie">
+        </form>
+        <a href="{% url 'board' board.id %}">Powrót do Tablicy</a>
+    </div>
 </body>
 </html>

@@ -2,24 +2,20 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>Dodaj Tablicę</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dodaj Nową Tablicę</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <h1>Dodaj nową tablicę</h1>
-    
-    <form method="POST">
-        {% csrf_token %}
-        <label for="name">Nazwa tablicy:</label>
-        <input type="text" name="name" id="name" required>
-        <br>
-        <label for="description">Opis tablicy:</label>
-        <textarea name="description" id="description"></textarea>
-        <br>
-        <button type="submit">Dodaj tablicę</button>
-    </form>
-    
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
+    <div class="container">
+        <h1>Dodaj Nową Tablicę</h1>
+        <form method="post">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Nazwa tablicy" required>
+            <textarea name="description" placeholder="Opis tablicy" required></textarea>
+            <input type="submit" value="Dodaj Tablicę">
+        </form>
+    </div>
 </body>
 </html>

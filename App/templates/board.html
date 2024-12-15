@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ board.name }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>{{ board.name }}</h1>
+            <p>{{ board.description }}</p>
+        </header>
+        
+        <h2>Zadania</h2>
+        <ul>
+            {% for task in tasks %}
+                <li>{{ task.name }} - {{ task.get_status_display }}</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{% url 'task_add' board.id %}">Dodaj zadanie</a>
+        <a href="{% url 'home.html' %}">Powrót do strony głównej</a>
+    </div>
+</body>
+</html>
