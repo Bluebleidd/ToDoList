@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edytuj Tablicę</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Edytuj Tablicę: {{ board.name }}</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Zapisz zmiany</button>
+        </form>
+        <button id="returnButton">Powrót do strony głównej</button>
+    </div>
+
+    <script>
+        document.getElementById('returnButton').addEventListener('click', function() {
+            window.location.href = "{% url 'home' %}";
+        });
+    </script>
+</body>
+</html>

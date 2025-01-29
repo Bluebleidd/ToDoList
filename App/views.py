@@ -50,3 +50,45 @@ def task_add(request, board_id):
     else:
         form = TaskForm()
     return render(request, 'task_add.html', {'form': form, 'board': board})
+
+@login_required
+def task_edit(request, board_id, task_id):
+    board = get_object_or_404(Board, id=board_id)
+    task = get_object_or_404(Task, id=task_id, board=board)
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('board', board_id=board.id)
+    else:
+        form = TaskForm(instance=task)
+    return render(request, 'task_edit.html', {'form': form, 'board': board, 'task': task})
+
+@login_required
+def board_edit(request, board_id):
+    board = get_object_or_404(Board, id=board_id)
+    if request.method == 'POST':
+        form = BoardForm(request.POST, instance=board)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = BoardForm(instance=board)
+    return render(request, 'board_edit.html', {'form': form, 'board': board})
+
+@login_required
+def board_delete(request, board_id):
+    board = get_object_or_404(Board, id=board_id)
+    if request.method == 'POST':
+        board.delete()
+        return redirect('home')
+    return redirect('home')
+
+@login_required
+def task_delete(request, board_id, task_id):
+    board = get_object_or_404(Board, id=board_id)
+    task = get_object_or_404(Task, id=task_id)
+    if request.method == 'POST':
+        task.delete()
+        return redirect('board', board_id=board.id)
+    return redirect('board', board_id=board.id)

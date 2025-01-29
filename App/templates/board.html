@@ -22,29 +22,50 @@
                 <ul>
                     {% for task in tasks %}
                         {% if task.status == 'TO DO' %}
-                            <li>{{ task.name }} - {{ task.status }}</li>
+                            <li>
+                                {{ task.name }} - {{ task.status }}
+                                <a href="{% url 'task_edit' board.id task.id %}">Edytuj</a>
+                                <form action="{% url 'task_delete' board.id task.id %}" method="post" class="delete-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="delete-task-button">Usuń</button>
+                                </form>
+                            </li>
                         {% endif %}
                     {% endfor %}
                 </ul>
             </div>
-
+        
             <div class="task-column">
                 <h3>Doing</h3>
                 <ul>
                     {% for task in tasks %}
                         {% if task.status == 'DOING' %}
-                            <li>{{ task.name }} - {{ task.status }}</li>
+                            <li>
+                                {{ task.name }} - {{ task.status }}
+                                <a href="{% url 'task_edit' board.id task.id %}">Edytuj</a>
+                                <form action="{% url 'task_delete' board.id task.id %}" method="post" class="delete-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="delete-task-button">Usuń</button>
+                                </form>
+                            </li>
                         {% endif %}
                     {% endfor %}
                 </ul>
             </div>
-
+        
             <div class="task-column">
                 <h3>Done</h3>
                 <ul>
                     {% for task in tasks %}
                         {% if task.status == 'DONE' %}
-                            <li>{{ task.name }} - {{ task.status }}</li>
+                            <li>
+                                {{ task.name }} - {{ task.status }}
+                                <a href="{% url 'task_edit' board.id task.id %}">Edytuj</a>
+                                <form action="{% url 'task_delete' board.id task.id %}" method="post" class="delete-form">
+                                    {% csrf_token %}
+                                    <button type="submit" class="delete-task-button">Usuń</button>
+                                </form>
+                            </li>
                         {% endif %}
                     {% endfor %}
                 </ul>
@@ -54,6 +75,7 @@
         <button id="addTaskButton">Dodaj zadanie</button>
         <button id="returnButton">Powrót do strony głównej</button>
     </div>
+
     <script>
         document.getElementById('addTaskButton').addEventListener('click', function() {
             window.location.href = "{% url 'task_add' board.id %}";
@@ -61,6 +83,16 @@
     
         document.getElementById('returnButton').addEventListener('click', function() {
             window.location.href = "{% url 'home' %}";
+        });
+        
+        const deleteButtons = document.querySelectorAll('.delete-form');
+        deleteButtons.forEach(buttons => {
+            buttons.addEventListener('submit', function(event) {
+                const confirmation = confirm("Czy na pewno chcesz usunąć to zadanie?");
+                if (!confirmation) {
+                    event.preventDefault();
+                }
+            });
         });
     </script>
 </body>

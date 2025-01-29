@@ -9,18 +9,30 @@
 </head>
 <body>
     <div class="container">
+        <div class="logout-container">
+            {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">Wyloguj się</button>
+                </form>
+            {% endif %}
+        </div>
         <h1>Lista Tablic</h1>
-            <div class="logout-container">
-                {% if user.is_authenticated %}
-                    <form action="{% url 'logout' %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit" class="logout-button">Wyloguj się</button>
-                    </form>
-                {% endif %}
-            </div>
+        <div class="boards-list"></div>
             {% for board in boards %}
-                <button class="board-button" data-board-url="{% url 'board' board.id %}">{{ board.name }}</button>
+                <div class="board-item"></div>
+                    <button class="board-button" data-board-url="{% url 'board' board.id %}">{{ board.name }}</button>
+                    <div class="button-container">
+                        <button class="edit-board-button" data-edit-url="{% url 'board_edit' board.id %}">Edytuj</button>
+                        <form action="{% url 'board_delete' board.id %}" method="post" class="delete-form">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-board-button">Usuń</button>
+                        </form>
+                    </div>
+                    <br>
+                </div>
             {% endfor %}
+        </div><br><br>
         <button id="add-board-button">Dodaj Tablicę</button>
     </div>
 
@@ -38,7 +50,27 @@
             addBoardButton.addEventListener('click', function() {
                 window.location.href = "{% url 'board_add' %}";
             });
+
+            const editButtons = document.querySelectorAll('.edit-board-button');
+            editButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const url = this.getAttribute('data-edit-url');
+                    window.location.href = url;
+                });
+            });
+
+            const deleteButtons = document.querySelectorAll('.delete-form');
+            deleteButtons.forEach(button => {
+                button.addEventListener('submit', function(event) {
+                    const confirmation = confirm("Czy na pewno chcesz usunąć tę tablicę?");
+                    if (!confirmation) {
+                        event.preventDefault();
+                    }
+                });
+            });
         });
+
+        
     </script>
 </body>
 </html>
