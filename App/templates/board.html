@@ -24,11 +24,13 @@
                         {% if task.status == 'TO DO' %}
                             <li>
                                 {{ task.name }} - {{ task.status }}
-                                <a href="{% url 'task_edit' board.id task.id %}">Edytuj</a>
-                                <form action="{% url 'task_delete' board.id task.id %}" method="post" class="delete-form">
-                                    {% csrf_token %}
-                                    <button type="submit" class="delete-task-button">Usuń</button>
-                                </form>
+                                <div class="button-container">
+                                    <button class="edit-task-button" edit-task-url="{% url 'task_edit' board.id task.id %}">Edytuj</button>
+                                    <form action="{% url 'task_delete' board.id task.id %}" method="post" class="delete-form">
+                                        {% csrf_token %}
+                                        <button type="submit" class="delete-task-button">Usuń</button>
+                                    </form>
+                                </div>
                             </li>
                         {% endif %}
                     {% endfor %}
@@ -42,11 +44,13 @@
                         {% if task.status == 'DOING' %}
                             <li>
                                 {{ task.name }} - {{ task.status }}
-                                <a href="{% url 'task_edit' board.id task.id %}">Edytuj</a>
-                                <form action="{% url 'task_delete' board.id task.id %}" method="post" class="delete-form">
-                                    {% csrf_token %}
-                                    <button type="submit" class="delete-task-button">Usuń</button>
-                                </form>
+                                <div class="button-container">
+                                    <button class="edit-task-button" edit-task-url="{% url 'task_edit' board.id task.id %}">Edytuj</button>
+                                    <form action="{% url 'task_delete' board.id task.id %}" method="post" class="delete-form">
+                                        {% csrf_token %}
+                                        <button type="submit" class="delete-task-button">Usuń</button>
+                                    </form>
+                                </div>
                             </li>
                         {% endif %}
                     {% endfor %}
@@ -60,11 +64,13 @@
                         {% if task.status == 'DONE' %}
                             <li>
                                 {{ task.name }} - {{ task.status }}
-                                <a href="{% url 'task_edit' board.id task.id %}">Edytuj</a>
-                                <form action="{% url 'task_delete' board.id task.id %}" method="post" class="delete-form">
-                                    {% csrf_token %}
-                                    <button type="submit" class="delete-task-button">Usuń</button>
-                                </form>
+                                <div class="button-container">
+                                    <button class="edit-task-button" edit-task-url="{% url 'task_edit' board.id task.id %}">Edytuj</button>
+                                    <form action="{% url 'task_delete' board.id task.id %}" method="post" class="delete-form">
+                                        {% csrf_token %}
+                                        <button type="submit" class="delete-task-button">Usuń</button>
+                                    </form>
+                                </div>
                             </li>
                         {% endif %}
                     {% endfor %}
@@ -84,7 +90,15 @@
         document.getElementById('returnButton').addEventListener('click', function() {
             window.location.href = "{% url 'home' %}";
         });
-        
+
+        const editButtons = document.querySelectorAll('.edit-task-button');
+            editButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const url = this.getAttribute('edit-task-url');
+                    window.location.href = url;
+                });
+            });
+
         const deleteButtons = document.querySelectorAll('.delete-form');
         deleteButtons.forEach(buttons => {
             buttons.addEventListener('submit', function(event) {

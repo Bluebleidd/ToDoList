@@ -92,3 +92,10 @@ def task_delete(request, board_id, task_id):
         task.delete()
         return redirect('board', board_id=board.id)
     return redirect('board', board_id=board.id)
+
+@login_required
+def delete_done_tasks(request, board_id):
+    if request.method == "POST":
+        board = get_object_or_404(Board, id=board_id)
+        Task.objects.filter(board=board, status='DONE').delete()
+        return redirect('board_detail', board_id=board_id)
