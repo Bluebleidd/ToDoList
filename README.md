@@ -7,7 +7,8 @@ Używane technologie (zalecane wersje):
 - pgAdmin (8.13)
 
 W programie pgAdmin4 należy:
-1. Stworzyć użytkownika "ToDoUser"
+1. Stworzyć użytkownika "ToDoUser":
+   
       -- Role: "ToDoUser"
       -- DROP ROLE IF EXISTS "ToDoUser";
       CREATE ROLE "ToDoUser" WITH
@@ -20,7 +21,7 @@ W programie pgAdmin4 należy:
         NOBYPASSRLS
         ENCRYPTED PASSWORD "<password>"
    
-2. Stworzyć baze danych "ToDoDatabase"
+2. Stworzyć baze danych "ToDoDatabase":
    
       -- Database: ToDoDatabase
       -- DROP DATABASE IF EXISTS "ToDoDatabase";
